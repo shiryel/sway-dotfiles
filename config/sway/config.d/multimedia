@@ -1,0 +1,14 @@
+# Musics
+bindsym $mod+F1 exec playerctl --ignore-player=chromium play-pause
+bindsym $mod+F2 exec playerctl --ignore-player=chromium previous
+bindsym $mod+F3 exec playerctl --ignore-player=chromium next
+
+# Volume
+bindsym $mod+equal exec pamixer -i 2
+bindsym $mod+minus exec pamixer -d 2
+
+bindsym $mod+Shift+equal exec pamixer -i 10
+bindsym $mod+Shift+minus exec pamixer -d 10
+
+# Screenshot
+bindsym $mod+Print exec grim ~/Screenshot/$(date '+%Y-%m-%d-%T').png

@@ -1,0 +1,48 @@
+#
+# DOCS:
+# https://www.mankier.com/5/sway
+#
+
+### Variables
+# Logo key. Use Mod1 for Alt.
+set $mod Mod1
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# terminal
+set $term kitty
+
+# Application launcher
+# Note: it's recommended that you pass the final command to sway
+set $menu rofi -show run | xargs swaymsg exec --
+
+set $lockscreenbg ~/.config/sway/images/lockscreen.png
+
+### Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' \
+#               resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Configuration files
+include ~/.config/sway/config.d/*
+
+# set default wallpaper if not exists
+exec_always /bin/bash ~/.config/sway/src/sway_background.sh
+output "*" background "~/.cache/wallpaper" fill
+
+# mako is a graphical notification daemon for Wayland compositors which support the layer-shell protocol. Notifications received over D-Bus are displayed until dismissed with a click or via makoctl(1).
+exec mako
+exec chromium

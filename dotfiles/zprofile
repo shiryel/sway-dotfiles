@@ -1,0 +1,5 @@
+#
+# READ AT LOGIN (before .zshrc)
+#
+
+export QT_QPA_PLATFORMTHEME="qt5ct"

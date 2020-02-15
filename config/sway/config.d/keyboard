@@ -1,0 +1,12 @@
+# Define the others environment vars (some of this is defined on the startup file, but in this case, this is to be changed)
+# use the xkb_options to switch to another layout if nessecary
+
+input * xkb_layout "us"
+
+# variant from layout (the `()`)
+input * xkb_variant "intl"
+
+# to switch to the 3 level
+input * xkb_options "lv3:ralt_switch" 
+
+input "MANUFACTURER1 Keyboard" xkb_model "pc101"

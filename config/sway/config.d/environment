@@ -1,0 +1,13 @@
+# Configs to startup suppervising Sway
+# startup will start the .conf on ~/.config/statup/
+
+#exec initctl set-env --global SWAYSOCK="$SWAYSOCK"
+
+#exec initctl set-env --global I3SOCK="$I3SOCK"
+
+#exec initctl set-env --global WAYLAND_DISPLAY="$WAYLAND_DISPLAY"
+
+# include only if xwayland is enabled and startup jobs need to access X
+#exec initctl set-env --global DISPLAY="$DISPLAY"
+
+#exec initctl emit sway-session

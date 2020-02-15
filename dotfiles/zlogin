@@ -1,0 +1,8 @@
+#
+# READ AT LOGIN (after .zshrc)
+#
+
+# for some reason when the kitty is open, this file is executed
+if [[ `ps -Al | grep sway -c` -lt 1 ]]; then
+  sway
+fi
