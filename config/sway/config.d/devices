@@ -14,3 +14,4 @@
 
 # Huion Inspiroy H640P
 input 9580:110:Tablet_Monitor_Pen map_to_output HDMI-A-4
+input 9580:109:HUION_Huion_Tablet_HS611_Pen map_to_output HDMI-A-4
