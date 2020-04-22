@@ -6,9 +6,14 @@ bar {
     # When the status_command prints a new line to stdout, swaybar updates.
     status_command while ~/.config/sway/src/sway_bar.sh; do sleep 1; done
 
+    strip_workspace_numbers yes
+
     colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        statusline #d5d6d7
+        background #798BC7D0
+        focused_background #798BC7D0
+        focused_workspace #7482b0 #7482b0 #d5d6d7
+        active_workspace #7482b0 #7482b0 #d5d6d7
+        inactive_workspace #798BC7D0 #798BC7D0 #d5d6d7
     }
 }

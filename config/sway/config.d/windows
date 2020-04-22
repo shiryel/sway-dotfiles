@@ -1,0 +1,12 @@
+default_border pixel 1
+gaps inner 5
+
+# background is of the title bar 
+# Can use RRGGBBAA
+# class                 border  backgr. text    indicator child_border
+client.focused          #798BC7D0 #285577 #ffffff #2e9ef4   #798BC7D0
+client.focused_inactive #FFFFFF00 #5f676a #ffffff #484e50   #FFFFFF00
+client.unfocused        #FFFFFF00 #222222 #888888 #292d2e   #FFFFFF00
+client.urgent           #FFFFFF00 #900000 #ffffff #900000   #FFFFFF00
+
+client.background       #ffffff

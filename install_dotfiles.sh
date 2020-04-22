@@ -7,5 +7,6 @@ for i in `ls "$SCRIPTPATH/dotfiles"`; {
 }
 
 for i in `ls "$SCRIPTPATH/config"`; {
+  rm -vr "$HOME/.config/$i"
   ln -fsv "$SCRIPTPATH/config/$i" "$HOME/.config/$i"
 }

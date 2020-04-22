@@ -39,10 +39,8 @@ set $lockscreenbg ~/.config/sway/images/lockscreen.png
 ### Configuration files
 include ~/.config/sway/config.d/*
 
-# set default wallpaper if not exists
-exec_always /bin/bash ~/.config/sway/src/sway_background.sh
-output "*" background "~/.cache/wallpaper" fill
+# animated wallpapers
+exec oguri
 
 # mako is a graphical notification daemon for Wayland compositors which support the layer-shell protocol. Notifications received over D-Bus are displayed until dismissed with a click or via makoctl(1).
 exec mako
-exec chromium

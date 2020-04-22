@@ -1,0 +1,5 @@
+[output *]
+image=~/.config/wallpapers/forest.gif
+filter=nearest
+scaling-mode=fill
+anchor=center

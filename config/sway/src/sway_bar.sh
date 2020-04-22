@@ -48,9 +48,9 @@ then
     song_status='▶'
 elif [ $player_status = "Paused" ]
 then
-    song_status='⏸'
+    song_status='='
 else
-    song_status='⏹'
+    song_status=''
 fi
 
 if [ $audio_is_muted = "true" ]
@@ -60,10 +60,10 @@ else
     audio_active='🔊'
 fi
 
-song="🎧 $song_status $media_artist - $media_song"
+song="🎧   $song_status  $media_artist - $media_song"
 network="$network_active $interface_easyname ($ping ms)"
-systemload="$(echo $loadavg_5min | cut -d "." -f 2)%"
+systemload="  $(echo $loadavg_5min | cut -d "." -f 2)%"
 audio="$audio_active $audio_volume%$battery"
-date_time="$date_and_week  🕘 $current_time"
+date_time=" $date_and_week ┇ 🕘 $current_time"
 
-echo "$song  |  $network  |  $systemload  |  $audio  |  $date_time  "
+echo "$song  ┇  $network  ┇  $systemload  ┇  $audio  ┇  $date_time  "
