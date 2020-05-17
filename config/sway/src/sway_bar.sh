@@ -1,3 +1,8 @@
+##############
+# DEPRECACED #
+##############
+# now using waybar
+
 # Date and time
 date_and_week=$(date "+%Y/%m/%d (w%-V)")
 current_time=$(date "+%H:%M")

@@ -39,6 +39,8 @@ set $lockscreenbg ~/.config/sway/images/lockscreen.png
 ### Configuration files
 include ~/.config/sway/config.d/*
 
+exec waybar
+
 # animated wallpapers
 exec oguri
 

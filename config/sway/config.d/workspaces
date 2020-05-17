@@ -1,18 +1,18 @@
 workspace_auto_back_and_forth yes
 
-set $ws1 "1:"
+set $ws1 1
 set $ws2 2
 set $ws3 3
 set $ws4 4
-set $ws5 "5:"
+set $ws5 5
 set $ws6 6
 set $ws7 7
 set $ws8 "8:"
 set $ws9 "9:"
 set $ws10 "10:"
 
-set $out1 HDMI-A-4
-set $out2 DP-2
+set $out1 HDMI-A-1
+set $out2 DP-1
 
 # Specific workspace output
 workspace $ws1 output $out1
@@ -49,7 +49,5 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-exec --no-startup-id swaymsg 'workspace $ws1; exec kitty'
-exec --no-startup-id swaymsg 'workspace $ws5; exec kitty'
 exec --no-startup-id swaymsg 'workspace $ws10; exec kitty cmus'
 exec --no-startup-id swaymsg 'workspace $ws9; exec chromium' 
