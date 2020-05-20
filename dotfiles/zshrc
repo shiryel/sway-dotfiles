@@ -113,6 +113,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+###########
+# ALIASES #
+###########
+
+alias telegram1='telegram-desktop -workdir $HOME/.telegram/1/'
+alias telegram2='telegram-desktop -workdir $HOME/.telegram/2/'
+
 #############
 # FUNCTIONS #
 #############
