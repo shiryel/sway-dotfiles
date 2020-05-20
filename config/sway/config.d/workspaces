@@ -65,4 +65,4 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 exec --no-startup-id swaymsg 'workspace $ws11; exec chromium' 
 exec --no-startup-id swaymsg 'workspace $ws12; exec firefox' 
 exec --no-startup-id swaymsg 'workspace $ws13; exec kitty cmus'
-exec --no-startup-id swaymsg 'workspace $ws14; exec telegram-desktop -workdir $HOME/.telegram/1/; exec telegram-desktop -workdir $HOME/.telegram/2/'
+exec --no-startup-id swaymsg 'workspace $ws14; exec telegram-desktop -workdir $HOME/.telegram/2/; exec telegram-desktop -workdir $HOME/.telegram/1/'
