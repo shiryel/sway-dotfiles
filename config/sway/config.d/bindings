@@ -35,7 +35,8 @@ mode "disabled" {
 }
 
 # TO GAMES
-bindsym $mod+Shift+g input 7511:44293:HID_1d57:ad05 map_to_output HDMI-A-4
+# see with: swaymsg -t get_outputs
+bindsym $mod+Shift+g input 7511:44293:HID_1d57:ad05 map_to_output HDMI-A-1
 bindsym $mod+Shift+f input 7511:44293:HID_1d57:ad05 map_to_region 0 0 3840 1080
 
 #
@@ -56,7 +57,7 @@ bindsym $mod+Shift+f input 7511:44293:HID_1d57:ad05 map_to_region 0 0 3840 1080
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
-   bindsym $mod+Shift+$right move right
+    bindsym $mod+Shift+$right move right
     # Ditto, with arrow keys
     bindsym $mod+Shift+Left move left
     bindsym $mod+Shift+Down move down
