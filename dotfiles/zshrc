@@ -28,6 +28,9 @@ export CLUTTER_BACKEND="wayland"
 # WARNING: Many proprietary games come bundled with old versions of SDL, which don't support Wayland and might break entirely if you set SDL_VIDEODRIVER=wayland. To force the application to run with XWayland, set SDL_VIDEODRIVER=x11.
 export SDL_VIDEODRIVER="wayland"
 
+# More recent versions of Firefox support opting into Wayland via an environment variable
+export MOZ_ENABLE_WAYLAND=1
+
 export PATH="$PATH:$HOME/Programs/flutter/bin/"
 export PATH="$PATH:$HOME/bin"
 
