@@ -4,6 +4,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+. /opt/asdf-vm/asdf.sh
+
 # STEAM WITH WAYLAND
 # I've been running Wayland for the past few months now and here's a few tips that I can think of:
 # - If a game is native and uses SDL (which is almost always), try adding LD_PRELOAD="/usr/lib64/libSDL2.so:/usr/lib/libSDL2.so:$LD_PRELOAD" %command% or wherever your system SDL libraries are located as a launch option, as I have yet to encounter a game that comes with SDL libraries compiled with Wayland support. This will fix stutter for some games, but most importantly will remove dependency on XWayland
@@ -33,6 +35,7 @@ export MOZ_ENABLE_WAYLAND=1
 
 export PATH="$PATH:$HOME/Programs/flutter/bin/"
 export PATH="$PATH:$HOME/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -161,6 +164,14 @@ screenshot() {
   : ${1:=screenshot}
   grim -g "$(slurp)" - > "$1.png"
   echo "save on ~/$1.png"
+}
+
+luks_open() {
+  cryptsetup open $1 $2
+}
+
+mnt() {
+  sudo mount -o noatime,nodiratime,compress=zstd,space_cache,subvol=@ $1 $2
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
