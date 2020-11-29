@@ -18,7 +18,8 @@ set $term kitty
 
 # Application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu rofi -show run | xargs swaymsg exec --
+#set $menu rofi -combi-modi window,drun,ssh,run -show combi -show-icons | xargs swaymsg exec --
+set $menu wofi --show drun,run -show-icons | xargs swaymsg exec --
 
 set $lockscreenbg ~/.config/sway/images/lockscreen.png
 
