@@ -28,7 +28,7 @@ export CLUTTER_BACKEND="wayland"
 
 # To run a SDL2 application on Wayland, set SDL_VIDEODRIVER=wayland
 # WARNING: Many proprietary games come bundled with old versions of SDL, which don't support Wayland and might break entirely if you set SDL_VIDEODRIVER=wayland. To force the application to run with XWayland, set SDL_VIDEODRIVER=x11.
-export SDL_VIDEODRIVER="wayland"
+export SDL_VIDEODRIVER="x11"
 
 # More recent versions of Firefox support opting into Wayland via an environment variable
 export MOZ_ENABLE_WAYLAND=1
@@ -172,6 +172,12 @@ luks_open() {
 
 mnt() {
   sudo mount -o noatime,nodiratime,compress=zstd,space_cache,subvol=@ $1 $2
+}
+
+restart_audio() {
+  systemctl --user restart pipewire.service
+  systemctl --user restart pipewire.socket
+  systemctl --user restart pipewire.service
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
