@@ -174,10 +174,8 @@ mnt() {
   sudo mount -o noatime,nodiratime,compress=zstd,space_cache,subvol=@ $1 $2
 }
 
-restart_audio() {
-  systemctl --user restart pipewire.service
+audio_restart() {
   systemctl --user restart pipewire.socket
-  systemctl --user restart pipewire.service
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
