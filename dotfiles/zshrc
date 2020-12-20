@@ -160,6 +160,19 @@ alias record='wf-recorder --audio="alsa_output.pci-0000_28_00.3.analog-stereo.mo
 # FUNCTIONS #
 #############
 
+help() {
+  echo "screenshare - To share screen using pipewire xdg-desktop-portal and xdg-desktop-portal-wlr on chrome with the pipewire flag enabled chrome://flags"
+  echo "screenshot/0 - Takes a screenshot"
+  echo "screenshot/1 - Takes a screenshot with a filename"
+  echo "luks_open/2 - Opens the DEVICE with the NAME"
+  echo "mnt/2 - Mounts a btrfs with subvol=@ using the DEVICE and the MOUNT_POINT"
+  echo "audio_restart/0 - Restarts the pipewire on the user"
+}
+
+screenshare() {
+  /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
+}
+
 screenshot() {
   : ${1:=screenshot}
   grim -g "$(slurp)" - > "$1.png"
