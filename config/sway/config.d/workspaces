@@ -11,12 +11,18 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 set $ws11 "11:"
-set $ws12 "12:"
-set $ws13 "13:"
-set $ws14 "14:"
+set $ws12 "12:"
+set $ws13 "13:"
 
 set $out1 HDMI-A-1
-set $out2 DP-1
+set $out2 DP-2
+set $out3 DP-3
+
+# Rotate and positionate OUT3
+exec --no-startup-id swaymsg output $out3 transform 270
+exec --no-startup-id swaymsg output $out3 position 0 0
+exec --no-startup-id swaymsg output $out1 position 1080 1400
+exec --no-startup-id swaymsg output $out2 position 3000 1400
 
 # Specific workspace output
 workspace $ws1 output $out1
@@ -30,9 +36,8 @@ workspace $ws8 output $out2
 workspace $ws9 output $out1
 workspace $ws10 output $out2
 workspace $ws11 output $out1 # chromium
-workspace $ws12 output $out2 # firefox
-workspace $ws13 output $out2 # cmus
-workspace $ws14 output $out2 # telegram
+workspace $ws12 output $out2 # telegram
+workspace $ws13 output $out3 # firefox
 
 # Switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -48,7 +53,6 @@ bindsym $mod+0 workspace $ws10
 bindsym $mod+Ctrl+1 workspace $ws11
 bindsym $mod+Ctrl+2 workspace $ws12
 bindsym $mod+Ctrl+3 workspace $ws13
-bindsym $mod+Ctrl+4 workspace $ws14
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -62,7 +66,8 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-exec --no-startup-id swaymsg 'workspace $ws11; exec chromium' 
-exec --no-startup-id swaymsg 'workspace $ws12; exec firefox' 
-exec --no-startup-id swaymsg 'workspace $ws13; exec kitty cmus'
-exec --no-startup-id swaymsg 'workspace $ws14; exec telegram-desktop -workdir $HOME/.telegram/2/; exec telegram-desktop -workdir $HOME/.telegram/1/'
+# START
+exec --no-startup-id swaymsg 'workspace $ws11; exec chromium'
+exec --no-startup-id swaymsg 'workspace $ws12; exec telegram-desktop'
+exec --no-startup-id swaymsg 'workspace $ws13; exec discord'
+exec --no-startup-id swaymsg 'exec firefox; layout toggle split'

@@ -148,8 +148,7 @@ source $ZSH/oh-my-zsh.sh
 # ALIASES #
 ###########
 
-alias telegram1='telegram-desktop -workdir $HOME/.telegram/1/'
-alias telegram2='telegram-desktop -workdir $HOME/.telegram/2/'
+alias telegram='telegram-desktop -workdir $HOME/.telegram'
 alias vi=nvim
 alias vim=nvim
 alias start-postgres='podman run -d --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres'
@@ -169,6 +168,9 @@ help() {
   echo "audio_restart/0 - Restarts the pipewire on the user"
 }
 
+# env PIPEWIRE_DEBUG=3 pipewire
+# /usr/local/libexec/xdg-desktop-portal-wlr -p BGRx -l DEBUG
+# /usr/local/libexec/xdg-desktop-portal --verbose -r
 screenshare() {
   /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
 }
