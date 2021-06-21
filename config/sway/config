@@ -7,6 +7,12 @@
 # Logo key. Use Mod1 for Alt.
 set $mod Mod1
 
+# WORKSPACES
+set $out-mid HDMI-A-1
+set $out-right DP-2
+set $out-left DP-3
+set $out-vr DP-1
+
 # Home row direction keys, like vim
 set $left h
 set $down j

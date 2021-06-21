@@ -36,8 +36,10 @@ mode "disabled" {
 
 # TO GAMES
 # see with: swaymsg -t get_outputs
-bindsym $mod+Shift+g input 7511:44293:HID_1d57:ad05 map_to_output HDMI-A-1
-bindsym $mod+Shift+f input 7511:44293:HID_1d57:ad05 map_to_region 0 0 3840 1080
+# man 5 sway-input
+# start on 1080/1400 extends a fullHD size 1920/1080
+bindsym $mod+Shift+g input 1241:64605:USB_Gaming_Mouse map_to_region 1080 1400 1920 1080
+bindsym $mod+Shift+f input 1241:64605:USB_Gaming_Mouse map_to_region 0 0 4920 2480
 
 #
 # Moving around:
