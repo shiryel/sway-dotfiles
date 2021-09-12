@@ -4,8 +4,8 @@
 #
 
 ### Variables
-# Logo key. Use Mod1 for Alt.
-set $mod Mod1
+# Logo key. Mod1=Alt, Mod4=Win
+set $mod Mod4
 
 # WORKSPACES
 set $out-mid HDMI-A-1
@@ -25,7 +25,7 @@ set $term kitty
 # Application launcher
 # Note: it's recommended that you pass the final command to sway
 #set $menu rofi -combi-modi window,drun,ssh,run -show combi -show-icons | xargs swaymsg exec --
-set $menu wofi --show drun,run -show-icons | xargs swaymsg exec --
+set $menu zsh -ic 'wofi --show drun,run --lines 12 --prompt "" | xargs swaymsg exec --'
 
 set $lockscreenbg ~/.config/sway/images/lockscreen.png
 

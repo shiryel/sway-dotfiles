@@ -5,7 +5,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.luarocks/bin/:$PATH
 
-. /opt/asdf-vm/asdf.sh
+# . /opt/asdf-vm/asdf.sh
 
 # STEAM WITH WAYLAND
 #
@@ -51,21 +51,38 @@ export PATH="$PATH:$HOME/.idris2/bin"
 # export C_INCLUDE_PATH=$(erl -eval 'io:format("~s", [lists:concat([code:root_dir(), "/erts-", erlang:system_info(version), "/include"])])' -s init stop -noshell)
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+
+# We wrap in a local function instead of exporting the variable directly in
+# order to avoid interfering with manually-run git commands by the user.
+function __git__() {
+  GIT_OPTIONAL_LOCKS=0 command git "$@"
+}
+
+function git_current_branch() {
+	ref=$(__git__ symbolic-ref --quiet HEAD 2> /dev/null)
+	echo ${ref#refs/heads/}
+}
+
 ZSH_THEME="bullet-train"
+PROMPT="%B%F{226}%~%f $(git_current_branch) ->%b "
+RPROMPT="%F{208}%n@%M%f"
+
+# autoload -U colors && colors
+# PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # System plugins
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # default: time status custom context dir screen perl ruby virtualenv nvm aws go rust elixir git hg cmd_exec_time
-BULLETTRAIN_PROMPT_ORDER=(time status custom context dir screen virtualenv aws git hg cmd_exec_time)
+# BULLETTRAIN_PROMPT_ORDER=(time status custom context dir screen virtualenv aws git hg cmd_exec_time)
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -129,8 +146,6 @@ plugins=(
   git
 )
 
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -167,6 +182,7 @@ alias vim=nvim
 alias start-postgres='podman run -d --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres'
 alias start-mongodb='podman run -d --name mongodb -p 27017:27017 mongo'
 alias record='wf-recorder --audio="alsa_output.pci-0000_28_00.3.analog-stereo.monitor"'
+alias genymotion='QT_QPA_PLATFORM=xcb genymotion'
 
 #############
 # FUNCTIONS #
@@ -186,6 +202,10 @@ help() {
 # /usr/local/libexec/xdg-desktop-portal --verbose -r
 screenshare() {
   /usr/lib/xdg-desktop-portal -r & /usr/lib/xdg-desktop-portal-wlr
+}
+
+xkitty() {
+	env -u WAYLAND_DISPLAY kitty
 }
 
 screenshot() {
@@ -229,6 +249,10 @@ proton() {
   # Run example: proton run /path/to/game.exe
   export STEAM_COMPAT_DATA_PATH=~/.proton
   /home/shiryel/data/Jogos/SteamLibrary/steamapps/common/Proton\ 5.13/proton $@
+}
+
+postgres() {
+	podman run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v pgdata:/var/lib/postgresql/data -d postgres
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
