@@ -24,7 +24,9 @@ set $term kitty
 
 # Application launcher
 # Note: it's recommended that you pass the final command to sway
-#set $menu rofi -combi-modi window,drun,ssh,run -show combi -show-icons | xargs swaymsg exec --
+# FIXME: does not run nautilus
+# set $menu wofi --show drun,run --lines 12 --prompt "" | xargs swaymsg exec --
+# FIXME does not run steam
 set $menu zsh -ic 'wofi --show drun,run --lines 12 --prompt "" | xargs swaymsg exec --'
 
 set $lockscreenbg ~/.config/sway/images/lockscreen.png
