@@ -1,0 +1,87 @@
+;-*- mode: lisp -*- file: .sbclrc
+
+;; https://github.com/NixOS/nixpkgs/issues/35306#issuecomment-512162977
+
+(defun in-home-dir (subdir)
+  (merge-pathnames subdir (user-homedir-pathname)))
+
+;; Lets make sure we didn't get some wonky temporary HOME
+(princ #\newline)
+(princ (concatenate 'string "Home: " (namestring (user-homedir-pathname))))
+
+#-quicklisp
+(let ((quicklisp-init (in-home-dir "quicklisp/setup.lisp")))
+  (when (probe-file quicklisp-init)
+    (load quicklisp-init)))
+#-asdf (require :asdf)
+
+(ql:quickload :linedit :silent t)
+(ql:quickload :cffi :silent t)
+(ql:quickload :cl-ppcre :silent t)
+
+;; Pretty this up with `let` and what not...
+(defparameter *home-libs* (in-home-dir ".nix-profile/lib/"))
+(defparameter *nix-cl-settings-dir*
+  (in-home-dir ".nix-profile/lib/common-lisp-settings"))
+(defparameter *nix-cl-settings-scripts*
+  (directory (concatenate 'string (namestring *nix-cl-settings-dir*)
+                          "/*-path-config.sh")))
+
+(defun source-file (f)
+  (concatenate 'string "source " (namestring f) "; "))
+
+(defparameter *nix-cl-libs*
+  (cl-ppcre:split ":" (uiop:run-program
+                       (format nil "~{~A~}"
+                               (nconc
+                                (mapcar #'source-file *nix-cl-settings-scripts*)
+                                '("echo \"${NIX_LISP_LD_LIBRARY_PATH}\";")))
+                       :output
+                       '(:string :stripped t))))
+
+(pushnew *home-libs* cffi:*foreign-library-directories*)
+(loop for l in *nix-cl-libs* do (pushnew (car(directory l))
+                                         cffi:*foreign-library-directories*))
+
+
+;;; Check for `--no-linedit` command-line option.
+;; For any of this to work you need to have installed `linedit`
+;; To do so run `(ql:quickload "linedit")`
+(if (member "--no-linedit" sb-ext:*posix-argv* :test 'equal)
+  (setf sb-ext:*posix-argv*
+        (remove "--no-linedit" sb-ext:*posix-argv* :test 'equal))
+  (when (interactive-stream-p *terminal-io*)
+    (require :sb-aclrepl)
+    (linedit:install-repl :wrap-current t)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Config with nixos home-manager ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ~/.sbclrc
+
+;; Can be found at
+;; https://discourse.nixos.org/t/tip-for-sbcl-quicklisp-and-library-dependencies-with-pkg-config/12065
+
+;#+asdf (require :asdf)
+;(ql:quickload :cffi :silent t)
+;(pushnew (merge-pathnames ".nix-profile/lib/" (user-homedir-path))
+;                 cffi:*foreign-library-directories*)
+;(pushnew (merge-pathnames ".nix-profile/lib64/" (user-homedir-path))
+;                 cffi:*foreign-library-directories*)
+
+;; This works great, but in the case of libssl.so we need to use pkg-config to lookup the path, and ideally we shouldn’t hard code it. So I did the following ( notably I have set PKG_CONFIG_PATH=/home/johndoe/.nix-profile/lib/pkgconfig:/home/johndoe/.nix-profile/lib64/pkgconfig:/home/johndoe/.nix-profile/share/pkgconfig; in my profile, which is important ).
+
+;(defun pkg-config-add-lib (libname)
+; (let ((process (sb-ext:run-program "/usr/bin/env"
+;                                    (list "pkg-config" libname "--libs-only-L")
+;                                    :input t :output :stream :wait t)))
+;  (let ((stream (sb-ext:process-output process)))
+;       (loop for line = (read-line stream nil nil)
+;        while line do
+;              ;; Drop "-L" part, and add '/' to the end. '/' IS necessary!
+;              (pushnew (pathname (concatenate 'string (subseq line 2) "/"))
+;                       cffi:*foreign-library-directories*))
+;       (sb-ext:process-close process))))
+;;; Get libssl
+;(pkg-config-add-lib "libssl")
