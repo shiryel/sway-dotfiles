@@ -21,7 +21,7 @@
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+r reload
+    bindsym $mod+Shift+r reload; output $out-left transform 270
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -40,6 +40,10 @@ mode "disabled" {
 # start on 1080/1400 extends a fullHD size 1920/1080
 bindsym $mod+Shift+g input 1241:64605:USB_Gaming_Mouse map_to_region 1080 1400 1920 1080
 bindsym $mod+Shift+f input 1241:64605:USB_Gaming_Mouse map_to_region 0 0 4920 2480
+
+# fix wine not finding mouse https://github.com/swaywm/sway/issues/4857
+# maybe its necessary to turn off monitors
+bindsym $mod+Shift+w output $out-mid resolution 1920x1080 position 0 0; output $out-left position 4920 1400
 
 #
 # Moving around:

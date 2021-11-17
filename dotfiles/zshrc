@@ -168,6 +168,10 @@ help() {
   echo "luks_open/2 - Opens the DEVICE with the NAME"
   echo "mnt/2 - Mounts a btrfs with subvol=@ using the DEVICE and the MOUNT_POINT"
   echo "audio_restart/0 - Restarts the pipewire on the user"
+  echo "=========== SWAY ============"
+  echo "\$mod+Shift+g - Keep the mouse on the mid monitor"
+  echo "\$mod+Shift+f - Let the mouse out the mid monitor"
+  echo "\$mod+Shift+w - Fix wine not finding mouse"
 }
 
 # Coloured man output
@@ -229,6 +233,14 @@ backup_data() {
   rsync -a -r -P --delete --inplace --backup --exclude '/0' --exclude '/etc/virtual_box_vms' --exclude '.Trash-*' --exclude '/games/SteamLibrary' --exclude='/.git' --filter="dir-merge,- .gitignore" --backup-dir="rsync_backups" ~/data/ "rsync://$ip/appdata/backup/shiryel/"
 }
 
+backup_ryush_server() {
+  rsync -av -e ssh ryush@144.172.71.84: ~/data/etc/ryush_server_backup
+}
+
+backup_contabo_server() {
+  rsync -av -e ssh shiryel@66.94.107.204: ~/data/etc/contabo_server_backup
+}
+
 proton() {
   # Run example: proton run /path/to/game.exe
   export STEAM_COMPAT_DATA_PATH=~/.proton
@@ -261,6 +273,10 @@ ffmpeg_vp9() {
   # https://trac.ffmpeg.org/wiki/Encode/VP9
   ffmpeg -i "$1" -c:v libvpx-vp9 -b:v 0 -crf 22 -pass 1 -preset fast -an -b:v 2600k -y -f null /dev/null && \
   ffmpeg -i "$1" -c:v libvpx-vp9 -b:v 0 -crf 22 -pass 2 -preset fast -an -b:v 2600k -b:a 64k -c:a libopus "$2".webm
+}
+
+envup() {
+  [ -f .env ] && set -o allexport; source .env; set +o allexport
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
