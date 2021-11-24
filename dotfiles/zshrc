@@ -281,3 +281,4 @@ envup() {
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f "/home/shiryel/.ghcup/env" ] && source "/home/shiryel/.ghcup/env" # ghcup-env
+eval "$(direnv hook bash)"
