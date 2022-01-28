@@ -20,6 +20,9 @@ export PATH=$HOME/.luarocks/bin/:$PATH
 # General arguments to make it work:
 # QT_QPA_PLATFORM=xcb LD_PRELOAD=/usr/lib/libfreetype.so.6 LD_LIBRARY_PATH=/usr/lib/openssl-1.0 %command%
 #
+# Solves many problems:
+# PROTON_USE_WINED3D=1 %command%
+#
 # I've been running Wayland for the past few months now and here's a few tips that I can think of:
 # - If a game is native and uses SDL (which is almost always), try adding LD_PRELOAD="/usr/lib64/libSDL2.so:/usr/lib/libSDL2.so:$LD_PRELOAD" %command% or wherever your system SDL libraries are located as a launch option, as I have yet to encounter a game that comes with SDL libraries compiled with Wayland support. This will fix stutter for some games, but most importantly will remove dependency on XWayland
 # - You'll also come across native games that won't work because it can't find a X display as it tries to force output via X11. If you're having that issue and the first tip didn't work, you'll have to fallback to using SDL_VIDEODRIVER=x11 %command% instead, very rarely you'll have to do LD_PRELOAD="/usr/lib64/libSDL2.so:/usr/lib/libSDL2.so:$LD_PRELOAD" SDL_VIDEODRIVER=x11 %command% (I think only DUSK has this problem out of games I've tested, going from memory)
@@ -45,6 +48,14 @@ export SDL_VIDEODRIVER="x11"
 
 # More recent versions of Firefox support opting into Wayland via an environment variable
 # export MOZ_ENABLE_WAYLAND=1
+
+# https://github.com/swaywm/sway/issues/595
+# https://wiki.archlinux.org/title/Java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing
+export _JAVA_AWT_WM_NONREPARENTING=1
+export AWT_TOOLKIT=MToolkit
+
+# https://wiki.archlinux.org/title/Java#Better_font_rendering
+export JDK_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 
 export PATH="$PATH:$HOME/Programs/flutter/bin/"
 export PATH="$PATH:$HOME/bin"
@@ -77,7 +88,7 @@ function git_current_branch() {
 }
 
 PROMPT="%B%F{226}%~%f $(git_current_branch) ->%b "
-RPROMPT="%F{208}%n@%M%f"
+RPROMPT="%(?..%F{red}<FAIL> %?) %F{208}%n@%M%f"
 
 # Generic extract function
 function extract {
@@ -145,9 +156,9 @@ alias start-mongodb='podman run -d --name mongodb -p 27017:27017 mongo'
 alias record='wf-recorder --audio="alsa_output.pci-0000_28_00.3.analog-stereo.monitor"'
 
 # https://github.com/ibraheemdev/modern-unix
-alias ls='exa'
+alias io='exa'
 alias df='duf'
-alias ps='procs'
+#alias ps='procs'
 alias dig='dog'
 alias top='btm --color gruvbox'
 
@@ -279,6 +290,30 @@ envup() {
   [ -f .env ] && set -o allexport; source .env; set +o allexport
 }
 
+nixup() {
+  # ln -s `nix eval nixos.libatomic_ops.outPath` /lib/libatomic.so.1
+  # or use `patchelf --replace-needed`
+
+  rm -r /lib/*
+  
+  gcc_path=$(nix eval nixpkgs.gcc-unwrapped.lib.outPath | tr -d '"')
+  gcc_libs=($(ls "${gcc_path}/lib/"))
+  for l in ${gcc_libs[*]}; do
+    ln -vs "$gcc_path/lib/$l" "/lib/$l"
+  done
+}
+
+ksync() {
+  tar cf - . | kubectl exec shinken -i catcher -v "$1"
+}
+
+# kubectl port-forward -n kube-system "$(kubectl get pods -n kube-system| grep '^traefik-' | awk '{print $1}')" 9000:9000
+
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/lib"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f "/home/shiryel/.ghcup/env" ] && source "/home/shiryel/.ghcup/env" # ghcup-env
-eval "$(direnv hook bash)"
+
+eval "$(direnv hook zsh)"
+
+return 0
